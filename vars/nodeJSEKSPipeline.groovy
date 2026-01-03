@@ -47,7 +47,7 @@ def call(Map configMap){
                     script{
                         dir("${env.SUBDIR}") {
                             sh """
-                                echo test
+                                npm test || true
                             """
                         }    
                     }
@@ -56,14 +56,14 @@ def call(Map configMap){
             //Here you need to select scanner tool and send the analysis to server
             stage('Sonar Scan'){
                 environment {
-                    SCANNER_HOME = tool 'sonar-8.0'  
+                    def scannerHome = tool 'sonar-8.0'
                 }
                 steps {
                     script{
                         withSonarQubeEnv('sonar-server') {
                             dir("${env.SUBDIR}") {
                                 sh """
-                                "${env.SCANNER_HOME}/bin/sonar-scanner"
+                                "${scannerHome}/bin/sonar-scanner"
                                 """
                             }    
                         }
