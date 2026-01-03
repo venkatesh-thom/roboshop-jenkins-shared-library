@@ -9,7 +9,7 @@ def call (Map configMap){
         environment {
             COURSE = "Jenkins"
             appVersion = configMap.get("appVersion")
-            ACC_ID = "441700732169"
+            ACC_ID = "262023811106"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
             deploy_to = configMap.get("deploy_to")
@@ -30,7 +30,7 @@ def call (Map configMap){
             stage('Deploy') {
                 steps {
                     script{
-                        withAWS(region:'us-west-2',credentials:'aws-creds') {
+                        withAWS(region:'us-east-1',credentials:'aws-creds') {
                             dir("${env.SUBDIR}") {
                                 sh """
                                     set -e

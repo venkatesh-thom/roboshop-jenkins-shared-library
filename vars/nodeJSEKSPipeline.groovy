@@ -9,7 +9,7 @@ def call(Map configMap){
         environment {
             COURSE = "Jenkins"
             appVersion = ""
-            ACC_ID = "441700732169"
+            ACC_ID = "262023811106"
             PROJECT = configMap.get("project")
             COMPONENT = configMap.get("component")
             SUBDIR = "robo-component-manifests/${COMPONENT}-ci"
@@ -147,13 +147,13 @@ def call(Map configMap){
             stage('Build Image') {
                 steps {
                     script{
-                        withAWS(region:'us-west-2',credentials:'aws-creds') {
+                        withAWS(region:'us-east-1',credentials:'aws-creds') {
                             dir("${env.SUBDIR}") {
                                 sh """
-                                    aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-west-2.amazonaws.com
-                                    docker build -t ${ACC_ID}.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
+                                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                                    docker build -t ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
                                     docker images
-                                    docker push ${ACC_ID}.dkr.ecr.us-west-2.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                                    docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
                                 """
                             }    
                         }
